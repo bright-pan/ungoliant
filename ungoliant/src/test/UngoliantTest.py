@@ -37,10 +37,6 @@ class UngoliantTest(unittest.TestCase):
     def test_verQueSpiderInicializoCorrectamente(self):
         assert(self.siteMock.called)
     
-    def test_VerQueFetchFunciona(self):
-
-        self.sut.fetch(self.siteMock)
-        self.fetcherMock.assert_called_with(self.siteMock)
         
     def test_crawlUnSiteConUnaConfiguracionBasicaFunciona(self):
         self.sut.crawl()

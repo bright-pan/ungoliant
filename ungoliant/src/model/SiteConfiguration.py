@@ -23,5 +23,8 @@ class SiteConfiguration(object):
     def get_config(self):
         return self.url_config
     
+    def set_site(self, site):
+        self.site = site
+        
     def set_config(self, url_config):
         self.url_config = url_config

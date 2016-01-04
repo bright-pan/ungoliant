@@ -21,9 +21,8 @@ if __name__ == '__main__':
     url_sites = sites.keys()
     site = sites[url_sites[1]]
 
-    spider = Ungoliant(x_site=site.get_site()) 
+    spider = Ungoliant(site_config=site) 
 
-    spider.set_url_config(config=site.get_config())
     spider.set_max_crawl(150)
 
     crawled = spider.crawl()
