@@ -40,6 +40,7 @@ class RegularCrawler(Crawler):
                     
                     crawled_links.append(new_url)
                     limit -= 1
+
                     content = spider.fetch(new_url)
                     item = spider.scrap(new_url, content)
                     revised.append(new_url)

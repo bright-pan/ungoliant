@@ -41,8 +41,6 @@ class UrlFetcher(object):
             proxy = urllib2.ProxyHandler(self.proxy)
             opener = urllib2.build_opener(proxy)
             
-        #los creo en el request pero no estoy seguro si esta bien
-
         #opener.addheaders = [('User-agent', "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30")]
         #Content-Type: text/plain; charset="UTF-8"
         #opener.addheaders = [('Accept-Charset', 'utf-8')]

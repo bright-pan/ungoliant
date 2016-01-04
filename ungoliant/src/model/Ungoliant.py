@@ -72,7 +72,7 @@ class Ungoliant:
         '''
         @param config: is a UrlConfiguration
         '''
-        self.site_conf.set_config(config)
+        self.site_config.set_config(config)
     
     def get_url_config(self):
         return self.site_config.get_config()
