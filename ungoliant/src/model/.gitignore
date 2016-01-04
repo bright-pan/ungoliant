@@ -1,0 +1,14 @@
+/ComplexCrawler.pyc
+/Crawler.pyc
+/DecodeException.pyc
+/FetchException.pyc
+/PageExtractor.pyc
+/RegularCrawler.pyc
+/SiteConfiguration.pyc
+/Ungoliant.pyc
+/UrlBasicConfiguration.pyc
+/UrlComplexConfiguration.pyc
+/UrlConfiguration.pyc
+/UrlFetcher.pyc
+/UrlFilter.pyc
+/__init__.pyc
