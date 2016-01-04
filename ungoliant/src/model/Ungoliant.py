@@ -12,13 +12,11 @@ logger = logging.getLogger('ungoliant')
 
 class Ungoliant:
     
-    def __init__(self, site_config, fetcher=UrlFetcher(), extractor=PageExtractor(), url_filter=UrlFilter(),crawler=RegularCrawler()):
+    def __init__(self, site_config, fetcher=UrlFetcher(), extractor=PageExtractor(), url_filter=UrlFilter(),crawler=RegularCrawler(), scraper=None, storer=None):
         self.logfile  = None
         self.logger =  logger
 
-        #self.site_conf = site_config
-        self.site = site_config.get_site()
-        self.url_configuration = site_config.get_config()
+        self.site_config = site_config
 
         self.max_crawl = 0
 
@@ -28,7 +26,9 @@ class Ungoliant:
         self.extractor = extractor
         self.url_filter = url_filter
         self.crawler = crawler
-        
+
+        self.scraper = scraper
+        self.storer = storer
         
     def fetch(self, url):
         '''
@@ -52,25 +52,30 @@ class Ungoliant:
         # aca hay que usar una REGEXP
         #tendria que usar una condicion o una regexp en lugar de la url_configuration
         
-        return self.url_filter.filter(self.url_configuration, links)
+        return self.url_filter.filter(self.site_config.get_config(), links)
    
     #dada una configuracion extrae esas urls
     def get_urls(self, start_url):
         '''
-        @return: a list of urls
+        @return: una lista con los urls que se encuentran en start_url y que cumplan con una condicion
         '''
-        start_urls = []
         content = self.fetch(start_url)
-        if content is not None:
-            start_links = self.extract_links(content)
-            start_urls = self.filter(start_links)
+        start_links = self.extract_links(content)
+        start_urls = self.filter(start_links)
+        
         return start_urls
+
+    def set_site(self, site_configuration):
+        self.site_conf = site_configuration
 
     def set_url_config(self, config):
         '''
         @param config: is a UrlConfiguration
         '''
-        self.url_configuration = config
+        self.site_conf.set_config(config)
+    
+    def get_url_config(self):
+        return self.site_config.get_config()
     
     def set_proxy(self, proxy):
         '''
@@ -79,16 +84,20 @@ class Ungoliant:
         self.fetcher.set_proxy(proxy)
     
     def store(self, output):
+        #self.storer.store(output)
         pass
-
-    #duda recibe el contenido de una pagina?
+    
     def scrap(self, url, page):
+        #self.scraper.scrap(url,page)
         pass
     
     def set_crawler(self, crawler):
         self.crawler = crawler
 
     def set_max_crawl(self, max_links):
+        '''
+        @param max_links: es un entero, que representa el numero maximo de paginas a crawlear 
+        '''
         self.max_crawl = max_links
     
     def get_max_crawl(self):

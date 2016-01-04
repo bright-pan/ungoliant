@@ -19,11 +19,11 @@ class ComplexCrawler(Crawler):
         
     def crawl(self, spider):
 
-        next_page = spider.fetch(spider.url_configuration.start_url())
+        next_page = spider.fetch(spider.get_url_config().start_url())
         
         #sirve para no repetir paginas de eventos
         revised = []
-        revised.append(spider.url_configuration.start_url())
+        revised.append(spider.get_url_config().start_url())
         
         #maximo de paginas a crawlear
         limit = spider.get_max_crawl()
@@ -32,23 +32,20 @@ class ComplexCrawler(Crawler):
         stack = []
         output = []
         
-        while(next_page is not None and limit is not 0):
+        while(next_page is not None and limit > 0):
 
             links = spider.extract_links(next_page)
             urls = spider.filter(links)
 
             for url in urls:
                 
-                print 'trying to get: ' + url
-                
-                if(spider.url_configuration.coincide_next_url(url) and url not in revised):
+                if(spider.get_url_config().coincide_next_url(url) and url not in revised):
                     
                     stack.append(url)
 
                 try:
-                    if(spider.url_filter.satisfy(spider.url_configuration, url) and url not in crawled_links):
+                    if(spider.url_filter.satisfy(spider.get_url_config(), url) and url not in crawled_links):
                         
-                        print 'getting: ' + url
                         item = self.mark_and_scrap_url(spider, crawled_links, url)
                         limit -= 1
                         output.append(item)

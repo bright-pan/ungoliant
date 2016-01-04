@@ -70,9 +70,9 @@ class UrlFetcher(object):
         self.init_opener()
         if not url:
             raise Exception("URL can not be null")
-        if(self.logger):
-            #self.logger.debug( "About to fetch url %s" % url)
-            print "About to fetch url %s" %url
+
+        #self.logger.debug( "About to fetch url %s" % url)
+        print "About to fetch url %s" %url
         
         req = self.create_request(url)
         try:
@@ -80,10 +80,10 @@ class UrlFetcher(object):
             content  = response.read()
             response.close()
         except FetchException:
-            raise FetchException("Error trying to fetch")
+            raise FetchException("Error trying to fetch %s" % url)
         try:
             decoded = self.decode(content)
             return decoded
         except DecodeException:
-            return None    
+            raise DecodeException("Error trying to decode %s" % url)
             

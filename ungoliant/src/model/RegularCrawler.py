@@ -21,8 +21,9 @@ class RegularCrawler(Crawler):
         
         stack = []
         crawled_links = []
+        revised = []
 
-        start_urls = spider.get_urls(spider.url_configuration.start_url())
+        start_urls = spider.get_urls(spider.get_url_config().start_url())
         
         for url in start_urls:
             stack.append(url)
@@ -33,23 +34,20 @@ class RegularCrawler(Crawler):
         while len(stack) > 0 and limit > 0:
         
             new_url = stack.pop()
-            print "Trying to get: " + new_url
 
             try:
-                if(spider.url_filter.satisfy(spider.url_configuration, new_url) and new_url not in crawled_links):
+                if(spider.url_filter.satisfy(spider.get_url_config(), new_url) and new_url not in crawled_links):
                     
-                    print "Getting :" + new_url
                     crawled_links.append(new_url)
                     limit -= 1
-                    
                     content = spider.fetch(new_url)
                     item = spider.scrap(new_url, content)
-
+                    revised.append(new_url)
                     output.append(item)
-                    
+                
                     links = spider.extract_links(content)
                     urls = spider.filter(links)
-                    
+                
                     for url in urls:    
                         stack.append(url)
 
