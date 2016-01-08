@@ -29,7 +29,9 @@ class JSFetcher(Fetcher):
 
     
     def fetch(self, url):
-
+        
+        #elegir un tiempo de espera mas corto o arreglar el tiempo de espera implicito o usar correctamente el webdriverwait
+        
         self.driver = self.initialize_phantom()
         logging.debug("About to fetch url %s" % url)
         try:
@@ -46,23 +48,7 @@ class JSFetcher(Fetcher):
         except Exception as e:
             logging.warn("Error at fetching with phantomjs")
             return None
-    '''
-    def fetch(self, url):
 
-        logging.debug( "About to fetch url %s" % url)        
-        print "about to fetch %s" % url
-        try:
-            self.driver.get(url)
-            html = self.driver.page_source
-            sleep(3)
-            content = html.encode("utf-8")
-            print "loaded %s" %url
-            #self.driver.close()
-            return content
-        except:
-            print "can't load %s" %url
-            return None
-    '''
     def set_proxy(self,proxy):
         
         protocol = proxy.keys()[0]
