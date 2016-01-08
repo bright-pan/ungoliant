@@ -12,7 +12,7 @@ class PageExtractor(object):
     
     def extract_links(self, page_content):
         '''
-        Recibe el contenido y saca todos los links. Algunos de estos links, no van a ser interesantes ( no conducen a eventos ) 
+        Recibe el contenido de una pagina y saca todos los links. Algunos de estos links, no van a ser interesantes ( no conducen a eventos ) 
         '''
         soup = BeautifulSoup(page_content)
         links = soup.find_all('a', {'href' : True})

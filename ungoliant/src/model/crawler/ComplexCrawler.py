@@ -3,7 +3,9 @@ Created on Jan 3, 2016
 
 @author: igzo
 '''
-from src.model.Crawler import Crawler
+
+import logging
+from src.model.crawler.Crawler import Crawler
 
 class ComplexCrawler(Crawler):
     '''
@@ -19,13 +21,13 @@ class ComplexCrawler(Crawler):
         
     def crawl(self, spider):
 
+        logging.debug("Starting the crawl")
+
         next_page = spider.fetch(spider.get_url_config().start_url())
         
-        #sirve para no repetir paginas de eventos
-        revised = []
-        revised.append(spider.get_url_config().start_url())
+        visited = []
+        visited.append(spider.get_url_config().start_url())
         
-        #maximo de paginas a crawlear
         limit = spider.get_max_crawl()
 
         crawled_links = []
@@ -39,7 +41,7 @@ class ComplexCrawler(Crawler):
 
             for url in urls:
                 
-                if(spider.get_url_config().coincide_next_url(url) and url not in revised):
+                if(spider.get_url_config().coincide_next_url(url) and url not in visited):
                     
                     stack.append(url)
 
@@ -50,24 +52,27 @@ class ComplexCrawler(Crawler):
                         limit -= 1
                         output.append(item)
                         
-                    if(limit is 0): 
+                    if(limit <= 0): 
                         break
                     
                 except Exception as e:
-                    #spider.logger.warn( "Error when fetching %s" % url)
-                    print "Error when fetching %s" % url
+                    logging.warn( "Error in first try-catch when fetching %s" % url)
             next_page = None
             
             if stack:
                 next_url = stack.pop()
-                revised.append(next_url)
+                visited.append(next_url)
                 try:
                     next_page = spider.fetch(next_url)
                 except Exception as e:
-                    #spider.logger.warn( "Error when fetching %s" % next_url)
-                    print "Error when fetching %s" % url
+                    logging.warn( "Error in second try-catch when fetching %s" % next_url)
                     
         spider.store(output)
+        spider.finish()
+        
+        logging.debug("Finishing the crawl")
+        
+        
         return crawled_links
     
     
@@ -75,7 +80,7 @@ class ComplexCrawler(Crawler):
     def mark_and_scrap_url(self, spider, crawled, url):
 
         crawled.append(url)
-        page = spider.fetch(url)
-        item = spider.scrap(url, page)
+        content = spider.fetch(url)
+        item = spider.scrap(url, content)
         
         return item

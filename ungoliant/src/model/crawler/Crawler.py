@@ -7,11 +7,10 @@ Created on Jan 3, 2016
 class Crawler(object):
 
 
-    def __init__(self,logger=None):
+    def __init__(self):
         '''
         Constructor
         '''
-        self.logger = logger
     
     def crawl(self, spider):
         raise NotImplementedError("Abstract method")

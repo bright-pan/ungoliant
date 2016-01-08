@@ -1,19 +1,14 @@
-import logging
-from UrlFetcher import UrlFetcher
-from PageExtractor import PageExtractor
-from UrlFilter import UrlFilter
-from RegularCrawler import RegularCrawler
-
-
-logger = logging.getLogger('ungoliant')
-
-#tengo que hacer test y cambiar la clase urlfilter 
+from src.model.fetcher.UrlFetcher import UrlFetcher
+from src.model.PageExtractor import PageExtractor
+from src.model.UrlFilter import UrlFilter
+from src.model.crawler.RegularCrawler import RegularCrawler
 
 
 class Ungoliant:
     
-    def __init__(self, site_config, fetcher=UrlFetcher(), extractor=PageExtractor(), url_filter=UrlFilter(),crawler=RegularCrawler(), scraper=None, storer=None):
-        self.logfile  = None
+    def __init__(self, site_config, logfile=None, logger=None, fetcher=UrlFetcher(), extractor=PageExtractor(), url_filter=UrlFilter(),crawler=RegularCrawler(), scraper=None, storer=None):
+        
+        self.logfile = logfile
         self.logger =  logger
 
         self.site_config = site_config
@@ -30,6 +25,8 @@ class Ungoliant:
         self.scraper = scraper
         self.storer = storer
         
+        self.crawled_urls = []
+            
     def fetch(self, url):
         '''
         Recibe una url y devuelve un string con el contenido. 
@@ -54,14 +51,15 @@ class Ungoliant:
         
         return self.url_filter.filter(self.site_config.get_config(), links)
    
-    #dada una configuracion extrae esas urls
     def get_urls(self, start_url):
         '''
         @return: una lista con los urls que se encuentran en start_url y que cumplan con una condicion
         '''
         content = self.fetch(start_url)
-        start_links = self.extract_links(content)
-        start_urls = self.filter(start_links)
+        start_urls = []
+        if(content):
+            start_links = self.extract_links(content)
+            start_urls = self.filter(start_links)
         
         return start_urls
 
@@ -91,6 +89,9 @@ class Ungoliant:
         #self.scraper.scrap(url,page)
         pass
     
+    def set_fetcher(self, url_fetcher):
+        self.fetcher=url_fetcher
+    
     def set_crawler(self, crawler):
         self.crawler = crawler
 
@@ -103,22 +104,13 @@ class Ungoliant:
     def get_max_crawl(self):
         return self.max_crawl
     
+    def finish(self):
+        self.fetcher.finish()
+    
     def crawl(self):
         '''
         el metodo crawl realiza crawling y scraping
         '''
-        return self.crawler.crawl(self)
-            
+        self.crawled_urls = self.crawler.crawl(self)
+        return self.crawled_urls
         
-if __name__ == '__main__':
-    
-    #no se usa pero perdi la info de los logs
-
-    logging.basicConfig()
-
-    logger.setLevel(logging.DEBUG)
-    
-    x_site = "theindependentsf.com"
-    
-    spider = Ungoliant(x_site=x_site)
-    spider.crawl()

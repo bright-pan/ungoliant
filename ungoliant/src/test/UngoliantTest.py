@@ -3,17 +3,19 @@ Created on Jan 3, 2016
 
 @author: igzo
 '''
-import unittest
-from src.model.Ungoliant import Ungoliant
-from mockito.mocking import mock
-from src.model.UrlFilter import UrlFilter
-from src.model.UrlFetcher import UrlFetcher
+
 from src.model.PageExtractor import PageExtractor
-from src.model.UrlBasicConfiguration import UrlBasicConfiguration
-from src.model.UrlComplexConfiguration import UrlComplexConfiguration
-from src.model.RegularCrawler import RegularCrawler
-from src.model.ComplexCrawler import ComplexCrawler
-from src.model.SiteConfiguration import SiteConfiguration
+import unittest
+from mockito.mocking import mock
+from src.model.configuration.SiteConfiguration import SiteConfiguration
+from src.model.UrlFilter import UrlFilter
+from src.model.fetcher.UrlFetcher import UrlFetcher
+from src.model.crawler.RegularCrawler import RegularCrawler
+from src.model.crawler.ComplexCrawler import ComplexCrawler
+from src.model.configuration.UrlBasicConfiguration import UrlBasicConfiguration
+from src.model.configuration.UrlComplexConfiguration import UrlComplexConfiguration
+from src.model.Ungoliant import Ungoliant
+
 
 #comenzar a testear
 class UngoliantTest(unittest.TestCase):

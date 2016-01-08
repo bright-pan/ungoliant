@@ -3,27 +3,24 @@ Created on Dec 19, 2015
 
 @author: igzo
 '''
-from UrlConfiguration import UrlConfiguration
+from src.model.configuration.UrlConfiguration import UrlConfiguration
 
-class UrlComplexConfiguration(UrlConfiguration):
+class UrlBasicConfiguration(UrlConfiguration):
     '''
     classdocs
     '''
-
-
-    def __init__(self, start='', base= '', key='', following=''):
+    def __init__(self, start='', base= '', key=''):
         '''
         Constructor
         '''
         UrlConfiguration.__init__(self, start, base)
         self.key = key
-        self.following = following
-        
+    
     def key_url(self):
         return self.key
-        
+    
     def next_url(self):
-        return self.following
+        return ''
     
     def coincide_next_url(self, url):
-        return self.following in url
+        return False

@@ -3,9 +3,9 @@ Created on Jan 3, 2016
 
 @author: igzo
 '''
-from src.model.SiteConfiguration import SiteConfiguration
-from src.model.UrlBasicConfiguration import UrlBasicConfiguration
-from src.model.UrlComplexConfiguration import UrlComplexConfiguration
+from src.model.configuration.SiteConfiguration import SiteConfiguration
+from src.model.configuration.UrlBasicConfiguration import UrlBasicConfiguration
+from src.model.configuration.UrlComplexConfiguration import UrlComplexConfiguration
 
 sites = {}
 
@@ -68,6 +68,20 @@ next_url_dnal = 'https://www.dnalounge.com/calendar/2016/0'
 complex_conf_dnal = UrlComplexConfiguration(start=start_dnal, base=base_dnal, key=key_dnal, following=next_url_dnal)
 c_site_conf_dnal = SiteConfiguration(site=site_dnal, url_config=complex_conf_dnal)
 
+site_cb = 'cityboxoffice.com'
+start_cb = 'https://www.cityboxoffice.com/'
+base_cb = 'https://www.cityboxoffice.com/eventperformances'
+key_cb = 'eventperformances'
+basic_conf_cb = UrlBasicConfiguration(start=start_cb, base=base_cb, key=key_cb)
+site_conf_cb = SiteConfiguration(site=site_cb, url_config=basic_conf_cb)
+
+site_js = 'engageinteractive.co.uk'
+start_js = 'http://engageinteractive.co.uk/'
+base_js = 'http://engageinteractive.co.uk/work/'
+key_js = 'work'
+basic_conf_js = UrlBasicConfiguration(start=start_js,base=base_js,key=key_js)
+site_conf_js = SiteConfiguration(site=site_js,url_config=basic_conf_js)
+
 sites[site_ti] = site_conf_ti
 sites[site_bs] = site_conf_bs
 sites[site_cftm] = site_conf_cftm
@@ -75,3 +89,5 @@ sites[site_dg] = site_conf_dg
 sites[site_dnal] = b_site_conf_dnal
 sites[site_sffc] = site_conf_sffc
 sites[site_f] = site_conf_f
+sites[site_cb] = site_conf_cb
+sites[site_js] = site_conf_js
